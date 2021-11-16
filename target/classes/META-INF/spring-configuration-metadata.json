@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "app.api",
+      "type": "com.libros.SwaggerConfig",
+      "sourceType": "com.libros.SwaggerConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.api.base-package",
+      "type": "java.lang.String",
+      "sourceType": "com.libros.SwaggerConfig"
+    },
+    {
+      "name": "app.api.contact-email",
+      "type": "java.lang.String",
+      "sourceType": "com.libros.SwaggerConfig"
+    },
+    {
+      "name": "app.api.contact-name",
+      "type": "java.lang.String",
+      "sourceType": "com.libros.SwaggerConfig"
+    },
+    {
+      "name": "app.api.description",
+      "type": "java.lang.String",
+      "sourceType": "com.libros.SwaggerConfig"
+    },
+    {
+      "name": "app.api.title",
+      "type": "java.lang.String",
+      "sourceType": "com.libros.SwaggerConfig"
+    },
+    {
+      "name": "app.api.version",
+      "type": "java.lang.String",
+      "sourceType": "com.libros.SwaggerConfig"
+    }
+  ],
+  "hints": []
+}
