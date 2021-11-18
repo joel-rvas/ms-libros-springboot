@@ -1,16 +1,20 @@
 package com.libros.services;
 
-import com.libros.entity.ExchangeBean;
-import com.libros.jpa.model.TblExchange;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import com.libros.jpa.model.CltLibro;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 
-public interface IExchangeService {
+public interface ILibroService {
+    Flowable<CltLibro> findAll();
 
+    Observable<CltLibro> obtenerLibroPorCodigo(String codigo);
+/*
     Flux<TblExchange> obtenerTipoCambio(String mndaOrign, String mndaDest, double valorMndaOrigen) throws Exception;
 
     Flux<TblExchange> listarTiposCambioActivos() throws Exception;
 
     Mono<TblExchange> actualizarTipoCambio(ExchangeBean bean) throws Exception;
+
+ */
 
 }

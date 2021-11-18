@@ -22,25 +22,10 @@ logging:
 spring:
   banner:
     location: classpath:banner.txt
-  h2:
-    console:
-      enabled: true
-      path: /console
-  datasource:
-    url: jdbc:h2:mem:exchange-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    platform: h2
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        show_sql: true
-        use_sql_comments: true
-        format_sql: true
+  data:
+    mongodb:
+      database: biblioteca
+      uri: mongodb://192.168.3.70:27017
 
 aplication:
   servers:
