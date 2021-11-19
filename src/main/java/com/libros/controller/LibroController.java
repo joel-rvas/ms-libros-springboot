@@ -1,39 +1,60 @@
 package com.libros.controller;
 
-import com.libros.jpa.model.CltLibro;
+import com.libros.data.model.CltLibro;
+import com.libros.entity.LibroBean;
 import com.libros.services.ILibroService;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import reactor.core.publisher.Mono;
 
 @RestController
 @CrossOrigin()
+@RequestMapping("/libro")
 public class LibroController {
     private static final Logger logger = LoggerFactory.getLogger(LibroController.class);
 
     @Autowired
     private ILibroService iLibroService;
 
-    @GetMapping(value = "/libro")
+    @GetMapping
     private Flowable<CltLibro> findAll() {
-        return this.iLibroService.findAll();
+        return this.iLibroService.obtenerLibros();
     }
 
-    @GetMapping(value = "/libro/{codLibro}")
+    @GetMapping(value = "/{codLibro}")
     private Observable<CltLibro> obtenerLibro(@PathVariable String codLibro) {
         return this.iLibroService.obtenerLibroPorCodigo(codLibro);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/single")
+    @PostMapping
+    public Single<CltLibro> registrarLibro(@RequestBody CltLibro libro) throws Exception {
+        return iLibroService.registrarLibro(libro);
+    }
+
+    @PutMapping
+    public Single<CltLibro> actualizarLibro(@RequestBody CltLibro libro) throws Exception {
+        this.iLibroService.obtenerLibroPorCodigo(libro.getCodigo()).subscribe(item -> {
+            libro.setId(item.getId());
+            iLibroService.registrarLibro(libro);
+        });
+        return null;
+
+    }
+
+    @DeleteMapping
+    public Completable deleteLibro(@RequestBody CltLibro libro) throws Exception {
+        return iLibroService.eliminarLibro(libro);
+    }
+
+    /*@RequestMapping(method = RequestMethod.GET, value = "/single")
     public Single<String> single() {
         return Single.just("single value");
     }
@@ -65,6 +86,6 @@ public class LibroController {
                 "Acme",
                 "Oceanic"
         );
-    }
+    }*/
 
 }

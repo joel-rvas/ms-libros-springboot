@@ -1,20 +1,18 @@
 package com.libros.services;
 
-import com.libros.jpa.model.CltLibro;
+import com.libros.data.model.CltLibro;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public interface ILibroService {
-    Flowable<CltLibro> findAll();
+    Flowable<CltLibro> obtenerLibros();
 
     Observable<CltLibro> obtenerLibroPorCodigo(String codigo);
-/*
-    Flux<TblExchange> obtenerTipoCambio(String mndaOrign, String mndaDest, double valorMndaOrigen) throws Exception;
 
-    Flux<TblExchange> listarTiposCambioActivos() throws Exception;
+    Single<CltLibro> registrarLibro(CltLibro libro);
 
-    Mono<TblExchange> actualizarTipoCambio(ExchangeBean bean) throws Exception;
-
- */
+    Completable eliminarLibro(CltLibro libro);
 
 }

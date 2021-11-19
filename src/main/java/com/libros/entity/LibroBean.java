@@ -1,15 +1,8 @@
-package com.libros.jpa.model;
+package com.libros.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
 
-import java.util.Date;
-
-@Document(value = "libro")
-public class CltLibro {
-
-    @Id
-    private String id;
+public class LibroBean implements Serializable {
 
     private String codigo;
     private String autores;
@@ -18,14 +11,6 @@ public class CltLibro {
     private String editorial;
     private int anioPublicacion;
     private int numPaginas;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getAutores() {
         return autores;
