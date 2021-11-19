@@ -1,7 +1,6 @@
 package com.libros.controller;
 
 import com.libros.data.model.CltLibro;
-import com.libros.entity.LibroBean;
 import com.libros.services.ILibroService;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Completable;
@@ -11,6 +10,7 @@ import io.reactivex.rxjava3.core.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -40,13 +40,14 @@ public class LibroController {
     }
 
     @PutMapping
-    public Single<CltLibro> actualizarLibro(@RequestBody CltLibro libro) throws Exception {
-        this.iLibroService.obtenerLibroPorCodigo(libro.getCodigo()).subscribe(item -> {
-            libro.setId(item.getId());
-            iLibroService.registrarLibro(libro);
-        });
-        return null;
-
+    public Observable<CltLibro> actualizarLibro(@RequestBody CltLibro libro) {
+        return iLibroService.obtenerLibroPorCodigo(libro.getCodigo()).doOnNext(u -> {
+            libro.setId(u.getId());
+            iLibroService.registrarLibro(libro).subscribe();
+        }).flatMap(item -> {
+                    return Observable.just(libro);
+                }
+        );
     }
 
     @DeleteMapping
@@ -54,7 +55,7 @@ public class LibroController {
         return iLibroService.eliminarLibro(libro);
     }
 
-    /*@RequestMapping(method = RequestMethod.GET, value = "/single")
+   /* @RequestMapping(method = RequestMethod.GET, value = "/single")
     public Single<String> single() {
         return Single.just("single value");
     }
