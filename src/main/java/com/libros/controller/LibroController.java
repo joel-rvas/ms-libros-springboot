@@ -39,9 +39,9 @@ public class LibroController {
         return iLibroService.registrarLibro(libro);
     }
 
-    @PutMapping
-    public Observable<CltLibro> actualizarLibro(@RequestBody CltLibro libro) {
-        return iLibroService.obtenerLibroPorCodigo(libro.getCodigo()).doOnNext(u -> {
+    @PutMapping(value = "/{codLibro}")
+    public Observable<CltLibro> actualizarLibro(@PathVariable String codLibro, @RequestBody CltLibro libro) {
+        return iLibroService.obtenerLibroPorCodigo(codLibro).doOnNext(u -> {
             libro.setId(u.getId());
             iLibroService.registrarLibro(libro).subscribe();
         }).flatMap(item -> {
@@ -50,9 +50,15 @@ public class LibroController {
         );
     }
 
-    @DeleteMapping
-    public Completable deleteLibro(@RequestBody CltLibro libro) throws Exception {
-        return iLibroService.eliminarLibro(libro);
+    @DeleteMapping(value = "/{codLibro}")
+    public Observable<CltLibro> deleteLibro(@PathVariable String codLibro, @RequestBody CltLibro libro) throws Exception {
+        return iLibroService.obtenerLibroPorCodigo(codLibro).doOnNext(u -> {
+            libro.setId(u.getId());
+            iLibroService.eliminarLibro(libro).subscribe();
+        }).flatMap(item -> {
+                    return Observable.just(libro);
+                }
+        );
     }
 
    /* @RequestMapping(method = RequestMethod.GET, value = "/single")
